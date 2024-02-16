@@ -5,10 +5,13 @@
 /* globals.css */
 
 body {
-    background-image: url('../public/background-image.jpeg');
-    background-size: cover; /* Adjusts the background image size to cover the entire body */
-    background-repeat: no-repeat; /* Prevents the background image from repeating */
-    background-attachment: fixed; /* Fixes the background image in place */
-    /* You can add more styles to customize the appearance of the background image */
-  }
-  
+  /* background-image: url('../public/background-image.jpeg'); */
+  background-size: cover; /* Adjusts the background image size to cover the entire body */
+  background-repeat: no-repeat; /* Prevents the background image from repeating */
+  background-attachment: fixed; /* Fixes the background image in place */
+  /* You can add more styles to customize the appearance of the background image */
+}
+
+/* .searchbar:active {
+  width: 120%;
+} */

@@ -9,31 +9,27 @@ interface Posts {
   date: string;
 }
 
-async function getPosts() {
-  try {
-    const res = await fetch("http://localhost:3000/api/posts", {
-      cache: "no-store",
-    });
-    if (!res.ok) {
-      throw new Error("Failed to fetch posts");
-    }
 
-    return res.json();
-  } catch (error) {}
-}
 
-export default async function Posts() {
-  const { posts } = await getPosts();
+export default async function Posts({ posts }: { posts: Posts[]}) {
+  
 
   return (
     <>
-      {posts.map((post: Posts) => (
+    <div className="grid grid-cols-2 grid-rows-2 gap-10 my-20">
+    {posts.map((post: Posts) => (
         <div
           key={post._id}
-          className="p-4 border border-blue-900 my-3 flex justify-between gap-5 items-start"
+          className="p-4 border border-blue-900 bg-white rounded-lg shadow-lg hover:shadow-2xl transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-105"
         >
           <div>
-            <h2 className="font-bold text-2xl">{post.title}</h2>
+          
+          <h2 className="font-bold text-2xl ">
+          <Link className=" text-bold text-blue-900 hover:text-blue-900/50" href={`/articles/${post._id}`}>
+
+          {post.title}</Link></h2>
+            
+            
             <h5 className="mb-5 text-slate-600">
               {new Intl.DateTimeFormat("en-NG", {
                 dateStyle: "long",
@@ -56,6 +52,10 @@ export default async function Posts() {
           </div>
         </div>
       ))}
+
+    </div>
+    
+      
     </>
   );
 }

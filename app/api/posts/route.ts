@@ -34,3 +34,4 @@ export async function DELETE(request: NextRequest, ){
     return NextResponse.json({message: "Post deleted"}, {status: 200})
 
 }
+
