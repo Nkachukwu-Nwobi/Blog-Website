@@ -28,9 +28,7 @@ export default async function Home() {
 
   return (
 
-    <>
-    {/* <SearchBar /> */}
-    
+    <>    
     <Posts posts={posts} />
     
 
