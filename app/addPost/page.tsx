@@ -6,7 +6,27 @@ import Link from "next/link";
 export default function addPost() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [image, setImage] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
   const router = useRouter();
+                              
+  function handleImageChange (e: React.ChangeEvent<HTMLInputElement>) {
+
+    const selectedImage = e.target.files?.[0];
+    if (selectedImage) {
+      setImage(selectedImage);
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        setImagePreview(reader.result as string);
+      };
+      reader.readAsDataURL(selectedImage);
+    } else {
+      setImage(null);
+      setImagePreview(null);
+    }
+  };
+
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -15,12 +35,20 @@ export default function addPost() {
       return;
     }
     try {
+
+      const formData = new FormData();
+      formData.append("title", title);
+      formData.append("content", content);
+      if (image) {
+        formData.append("image", image);
+      }
+
       const res = await fetch("http://localhost:3000/api/posts", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ title, content }),
+        // headers: {
+        //   "Content-Type": "application/json",
+        // },
+        body: formData,
       });
 
       if (res.ok) {
@@ -45,8 +73,8 @@ export default function addPost() {
         </Link>
       </div>
 
-      <div className="mt-2 flex flex-col gap-2">
-        <label htmlFor="title">Title</label>
+      <div className="mt-5 flex flex-col gap-2">
+        <label className="text-2xl" htmlFor="title">Title</label>
         <input
           onChange={(e) => setTitle(e.target.value)}
           value={title}
@@ -58,8 +86,22 @@ export default function addPost() {
         />
       </div>
 
-      <div className="mt-2 flex flex-col gap-2">
-        <label htmlFor="content">Content</label>
+      <div className="mt-5 flex flex-col gap-2">
+        <label className="text-2xl" htmlFor="image">Image</label>
+        <input
+          type="file"
+          id="image"
+          name="image"
+          accept="image/*"
+          onChange={handleImageChange} // Store the selected image file
+        />
+        {imagePreview && (
+        <img src={imagePreview} alt="Preview" style={{ marginTop: '2rem', maxWidth: '30%', maxHeight: '300px' }} />
+        )}
+      </div>
+
+      <div className="mt-5 flex flex-col gap-2">
+        <label className="text-2xl" htmlFor="content">Content</label>
         <textarea
           onChange={(e) => setContent(e.target.value)}
           value={content}
