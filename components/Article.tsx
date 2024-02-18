@@ -1,6 +1,7 @@
 "use client"
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
 interface Post {
   _id: string;
@@ -52,7 +53,8 @@ export default function Article({ post }: { post: Post }) {
         <div className="flex justify-start gap-5 border-b-2 border-t-2 border-blue-900 py-10">
         
           <div className=" w-1/2">
-            <img src={imageSource} alt="Post Image" />
+            <Image src={imageSource} alt="Blogpost Image" width={550} height={500} priority={true} />
+            
           </div>
 
         <div className="w-1/2">

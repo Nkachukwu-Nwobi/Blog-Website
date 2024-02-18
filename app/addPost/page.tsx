@@ -1,9 +1,11 @@
 "use client";
+
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 
-export default function addPost() {
+export default function AddPost() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [image, setImage] = useState<File | null>(null);
@@ -96,7 +98,9 @@ export default function addPost() {
           onChange={handleImageChange} // Store the selected image file
         />
         {imagePreview && (
-        <img src={imagePreview} alt="Preview" style={{ marginTop: '2rem', maxWidth: '30%', maxHeight: '300px' }} />
+
+          <Image src={imagePreview} alt="Preview" width={300} height={300} priority={true} style={{ marginTop: '2rem' }} />
+
         )}
       </div>
 
