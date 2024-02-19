@@ -2,6 +2,9 @@
 
 import { useEffect, useState } from 'react';
 import Posts from "@/components/Posts";
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 
 export default function Home() {
@@ -10,7 +13,9 @@ export default function Home() {
   useEffect(() => {
     async function fetchPosts() {
       try {
-        const res = await fetch("http://localhost:3000/api/posts", {
+        const base_url = process.env.base_url as string;
+
+        const res = await fetch(`${base_url}/api/posts`, {
           cache: "no-store",
         });
         if (!res.ok) {
