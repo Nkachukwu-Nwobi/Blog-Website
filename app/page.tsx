@@ -2,9 +2,9 @@
 
 import { useEffect, useState } from 'react';
 import Posts from "@/components/Posts";
-import dotenv from 'dotenv';
 
-dotenv.config();
+
+
 
 
 export default function Home() {
@@ -12,7 +12,9 @@ export default function Home() {
 
   useEffect(() => {
     async function fetchPosts() {
-      const base_url = process.env.base_url as string;
+       
+      const base_url = process.env.NEXT_PUBLIC_BASE_URL as string;
+    
       try {
         
         console.log(base_url)
