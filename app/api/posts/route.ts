@@ -34,8 +34,6 @@ export async function POST(request: NextRequest) {
   const content = formData.get("content");
   const image = formData.get("image") as File | null;
 
-  console.log(image);
-
   if (!title || !content) {
     throw new Error("Title or content is missing");
   }

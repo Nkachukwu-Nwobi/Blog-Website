@@ -1,38 +1,34 @@
-import Image from "next/image";
+"use client"
+
+import { useEffect, useState } from 'react';
 import Posts from "@/components/Posts";
-import SearchBar from "@/components/SearchBar";
 
 
+export default function Home() {
+  const [posts, setPosts] = useState([]);
 
+  useEffect(() => {
+    async function fetchPosts() {
+      try {
+        const res = await fetch("http://localhost:3000/api/posts", {
+          cache: "no-store",
+        });
+        if (!res.ok) {
+          throw new Error("Failed to fetch posts");
+        }
+        const data = await res.json();
 
-
-async function getPosts() {
-  try {
-    const res = await fetch("http://localhost:3000/api/posts", {
-      cache: "no-store",
-    });
-    if (!res.ok) {
-      throw new Error("Failed to fetch posts");
+        setPosts(data.posts);
+      } catch (error) {
+        console.error("Error fetching posts:", error);
+      }
     }
-
-    return res.json();
-  } catch (error) {}
-}
-
-
-
-export default async function Home() {
-
-  const { posts } = await getPosts();
-
+    fetchPosts();
+  }, posts); 
 
   return (
-
-    <>    
-    <Posts posts={posts} />
-    
-
+    <>
+      <Posts posts={posts} />
     </>
-    
-  )
+  );
 }
