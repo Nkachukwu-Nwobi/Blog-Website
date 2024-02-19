@@ -24,7 +24,7 @@ export default function Home() {
       }
     }
     fetchPosts();
-  }, posts); 
+  }, []); 
 
   return (
     <>
