@@ -12,8 +12,10 @@ export default function Home() {
 
   useEffect(() => {
     async function fetchPosts() {
+      const base_url = process.env.base_url as string;
       try {
-        const base_url = process.env.base_url as string;
+        
+        console.log(base_url)
 
         const res = await fetch(`${base_url}/api/posts`, {
           cache: "no-store",
@@ -25,6 +27,7 @@ export default function Home() {
 
         setPosts(data.posts);
       } catch (error) {
+        console.log(base_url)
         console.error("Error fetching posts:", error);
       }
     }
