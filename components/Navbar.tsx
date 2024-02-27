@@ -1,3 +1,5 @@
+"use client"
+
 import Link from "next/link";
 import "../app/globals.css";
 import ProfilePic from "@/components/ProfilePic";
@@ -9,73 +11,84 @@ import {
   FaEnvelope,
   FaSearch,
 } from "react-icons/fa";
+import { usePathname } from "next/navigation";
 
 export default function Navbar() {
+
+  const pathname = usePathname()
+  console.log(pathname)
+
+
   return (
-    <nav className=" bg-blue-900 sticky top-0 drop-shadow-xl z-10 mb-2">
-
-      <div className="flex justify-between items-center px-5 py-2 text-white gap-20 ">
-
-        {/*                               */}
-        <div className="flex flex-col sm:flex-row gap-3 text-xl flex-grow flex-shrink w-1/3 ">
-          <Link
-            href="/about"
-            className="text-white/80 no-underline  hover:text-white flex "
-          >
-            <div>
-              <FaFacebook />
-            </div>
-          </Link>
-          <Link
-            href="/about"
-            className="text-white/80 no-underline  hover:text-white flex "
-          >
-            <div>
-              <FaGithub />
-            </div>
-          </Link>
-          <Link
-            href="/about"
-            className="text-white/80 no-underline  hover:text-white flex "
-          >
-            <div>
-              <FaLinkedin />
-            </div>
-          </Link>
-          <Link
-            href="/about"
-            className="text-white/80 no-underline  hover:text-white flex "
-          >
-            <div>
-              <FaEnvelope />
-            </div>
-          </Link>
-        </div>
-
-
+    <nav className=" bg-black sticky top-0 drop-shadow-xl z-10">
+      <div className=" max-w-7xl mx-auto flex justify-between items-center px-10 py-2 text-white gap-20 ">
         {/*                               */}
 
-        <div className=" flex-grow flex-shrink w-1/3">
-          <div className="flex flex-col gap-1 text-center">
+        <div>
+          <div className="flex flex-col gap-1 text-center justify-center">
             <ProfilePic />
             <Link href="/">CodeWithKarchies</Link>
           </div>
         </div>
 
-        {/* getSearchResults={(results) => setPosts(results)} */}
+        {/*                               */}
 
+        <div className=" flex justify-between gap-4 text-center"> 
+          <Link href="/" className={pathname === '/' ? 'text-red-500' : ''}>
+            Home
+          </Link>
+          <Link href={"/blog"} className={pathname === '/blog' ? 'text-red-500' : ''}>Blog</Link>
+          <Link href={"/contact"} className={pathname === '/contact' ? 'text-red-500' : ''}>Contact</Link>
+        </div>
 
         {/*                               */}
 
-        <div className="flex justify-between flex-col sm:flex-row items-center gap-5 flex-grow flex-shrink w-1/3 ">
-          <SearchBar/>
+        {/* getSearchResults={(results) => setPosts(results)} */}
+
+        {/*                               */}
+
+        <div className="flex flex-col sm:flex-row items-center gap-6">
+
+          <div>
+          <SearchBar />
+          </div>
+
+          <div className="flex flex-col sm:flex-row gap-3 text-xl">
+            <Link
+              href="/about"
+              className="text-white/80 no-underline  hover:text-white flex "
+            >
+              <div>
+                <FaFacebook />
+              </div>
+            </Link>
+            <Link
+              href="/about"
+              className="text-white/80 no-underline  hover:text-white flex "
+            >
+              <div>
+                <FaGithub />
+              </div>
+            </Link>
+            <Link
+              href="/about"
+              className="text-white/80 no-underline  hover:text-white flex "
+            >
+              <div>
+                <FaLinkedin />
+              </div>
+            </Link>
+            <Link
+              href="/about"
+              className="text-white/80 no-underline  hover:text-white flex "
+            >
+              <div>
+                <FaEnvelope />
+              </div>
+            </Link>
+          </div>
+
           
-          <Link
-            className="bg-white p-2 text-blue-900 font-bold hover:bg-blue-900 hover:text-white hover:border-black rounded-lg border border-blue-900"
-            href="/addPost"
-          >
-            Add Post
-          </Link>
         </div>
       </div>
     </nav>
