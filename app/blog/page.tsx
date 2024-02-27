@@ -16,9 +16,7 @@ export default function Home() {
 
       try {
         console.log(base_url);
-        const res = await fetch(`${base_url}/api/posts`, {
-          cache: "no-store",
-        });
+        const res = await fetch(`${base_url}/api/posts`);
         if (!res.ok) {
           throw new Error("Failed to fetch posts");
         }
