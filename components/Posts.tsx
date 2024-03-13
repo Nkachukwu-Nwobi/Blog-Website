@@ -38,16 +38,16 @@ export default function Posts({ posts }: { posts: Posts[] }) {
 
   return (
     <>
-      <div className="grid grid-cols-2 grid-rows-2 gap-10 my-20">
+      <div className="grid grid-cols-2 grid-rows-2 gap-10 my-20 w-10/12 mx-auto">
         {posts.map((post: Posts) => (
           <div
             key={post._id}
-            className="px-6 py-4 border border-blue-900 bg-white rounded-lg shadow-lg hover:shadow-2xl transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-105 flex flex-col gap-5"
+            className="px-6 py-4 border border-black bg-white rounded-lg shadow-lg hover:shadow-2xl transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-105 flex flex-col gap-5"
           >
             <div>
               <h2 className="font-bold text-2xl ">
                 <Link
-                  className=" text-bold text-blue-900 hover:text-blue-900/50"
+                  className=" text-bold text-black hover:text-gray-400"
                   href={`/articles/${post._id}`}
                 >
                   {post.title}
@@ -65,22 +65,23 @@ export default function Posts({ posts }: { posts: Posts[] }) {
               
 
               {post.image ? (
-                <div className="flex gap-5 ">
-                  <div className="w-1/2 ">
+                <div className="flex flex-col gap-5 ">
+                  <div className=" w-full">
                   {post.image && imageSources[post._id] ? (
                       <Image
                         src={imageSources[post._id]}
                         alt="Blogpost image"
-                        width={270}
-                        height={270}
+                        width={10}
+                        height={10}
                         priority={true}
+                        className=" mx-auto w-11/12 h-1/2"
                       />
                     ) : null}
                   </div>
 
-                  <div className="w-1/2">
+                  <div className="">
                     <p>
-                      {post.content.slice(0, 330)}...
+                      {post.content.slice(0, 200)}...
                       <Link
                         className=" text-bold text-blue-900 hover:text-blue-900/50 text-left"
                         href={`/articles/${post._id}`}
@@ -93,7 +94,7 @@ export default function Posts({ posts }: { posts: Posts[] }) {
               ) : (
                 <div>
                 <p>
-                  {post.content.slice(0, 730)}...
+                  {post.content.slice(0, 1000)}...
                   <Link
                     className=" text-bold text-blue-900 hover:text-blue-900/50"
                     href={`/articles/${post._id}`}

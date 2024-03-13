@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import Link from "next/link";
 import "../app/globals.css";
@@ -14,10 +14,8 @@ import {
 import { usePathname } from "next/navigation";
 
 export default function Navbar() {
-
-  const pathname = usePathname()
-  console.log(pathname)
-
+  const pathname = usePathname();
+  console.log(pathname);
 
   return (
     <nav className=" bg-black sticky top-0 drop-shadow-xl z-10">
@@ -33,12 +31,31 @@ export default function Navbar() {
 
         {/*                               */}
 
-        <div className=" flex justify-between gap-4 text-center"> 
-          <Link href="/" className={pathname === '/' ? 'text-red-500' : ''}>
+        <div className=" flex justify-between gap-4 text-center text-xl font-black">
+          <Link
+            href="/"
+            className={`${
+              pathname === "/" ? "text-blue-900" : ""
+            } hover:text-blue-900`}
+          >
             Home
           </Link>
-          <Link href={"/blog"} className={pathname === '/blog' ? 'text-red-500' : ''}>Blog</Link>
-          <Link href={"/contact"} className={pathname === '/contact' ? 'text-red-500' : ''}>Contact</Link>
+          <Link
+            href={"/blog"}
+            className={`${
+              pathname === "/blog" ? "text-blue-900" : ""
+            } hover:text-blue-900`}
+          >
+            Blog
+          </Link>
+          <Link
+            href={"/contact"}
+            className={`${
+              pathname === "/contact" ? "text-blue-900" : ""
+            } hover:text-blue-900`}
+          >
+            Contact
+          </Link>
         </div>
 
         {/*                               */}
@@ -48,15 +65,14 @@ export default function Navbar() {
         {/*                               */}
 
         <div className="flex flex-col sm:flex-row items-center gap-6">
-
           <div>
-          <SearchBar />
+            <SearchBar />
           </div>
 
           <div className="flex flex-col sm:flex-row gap-3 text-xl">
             <Link
               href="/about"
-              className="text-white/80 no-underline  hover:text-white flex "
+              className="text-white no-underline  hover:text-white flex "
             >
               <div>
                 <FaFacebook />
@@ -64,7 +80,7 @@ export default function Navbar() {
             </Link>
             <Link
               href="/about"
-              className="text-white/80 no-underline  hover:text-white flex "
+              className="text-white no-underline  hover:text-white flex "
             >
               <div>
                 <FaGithub />
@@ -72,7 +88,7 @@ export default function Navbar() {
             </Link>
             <Link
               href="/about"
-              className="text-white/80 no-underline  hover:text-white flex "
+              className="text-white no-underline  hover:text-white flex "
             >
               <div>
                 <FaLinkedin />
@@ -87,8 +103,6 @@ export default function Navbar() {
               </div>
             </Link>
           </div>
-
-          
         </div>
       </div>
     </nav>

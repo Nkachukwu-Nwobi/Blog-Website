@@ -6,28 +6,9 @@ import multer from "multer";
 import path from "path";
 
 
-// const storage = multer.diskStorage({
-//   destination: (req, file, cb) => {
-//     cb(null, path.join(__dirname, "public/uploads"));
-//   },
-//   filename: (req, file, cb) => {
-//     console.log(file);
-//     const uniqueFilename = `${file.fieldname}-${Date.now()}-${path.extname(
-//       file.originalname
-//     )}`;
-
-//     cb(null, uniqueFilename);
-//   },
-// });
-
-// const upload = multer({ storage: storage });
-
-// export const middleware = upload.single("image");
 
 export async function POST(request: NextRequest) {
-  // const {title, content} = await request.json()
-  // await connectDB()
-  // await Blogpost.create({title, content})
+
 
   const formData = await request.formData();
 

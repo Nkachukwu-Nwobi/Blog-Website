@@ -1,10 +1,12 @@
 import DeleteBtn from "../../components/DeleteBtn";
 import EditBtn from "../../components/EditBtn";
+import CommentBtn from "@/components/CommentBtn";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { FaArrowLeft, FaChevronRight } from "react-icons/fa";
 
 interface FeaturedPosts {
   _id: string;
@@ -46,11 +48,11 @@ export default function FeaturedPosts({ posts }: { posts: FeaturedPosts[] }) {
   function CustomNextArrow(props: any) {
     const { className, style, onClick } = props;
     return (
-      <div
-        className={`${className}`}
-        style={{ ...style, display: "block", background: "gray"}}
-        onClick={onClick}
-      />
+      <div className={`${className}`}
+      style={{ ...style, display: "block", background: "black" }}
+      onClick={onClick}>
+        <FaChevronRight size={24} />
+      </div>
     );
   }
 
@@ -58,10 +60,14 @@ export default function FeaturedPosts({ posts }: { posts: FeaturedPosts[] }) {
     const { className, style, onClick } = props;
     return (
       <div
-        className={className}
-        style={{ ...style, display: "block", background: "gray" }}
+      className={className}
+        style={{ ...style, display: "block", background: "black" }}
         onClick={onClick}
-      />
+      >
+        <FaArrowLeft size={24} />
+        
+    </div>
+      
     );
   }
 
@@ -71,41 +77,55 @@ export default function FeaturedPosts({ posts }: { posts: FeaturedPosts[] }) {
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
-    prevArrow: <CustomPrevArrow />,
+    prevArrow: <CustomPrevArrow  />,
     nextArrow: <CustomNextArrow />,
-  };
-
-  const styles = {
-    backgroundColor: 'red',
-    color: 'white',
-    padding: '10px',
+    autoplay: true, 
+    autoplaySpeed: 3000, 
   };
 
   return (
-    <div className=" py-8 px-20 ">
+    <div className=" py-8 px-8 w-full mx-auto ">
+
+        <div className=" text-3xl mb-4 font-black text-blue-900"><h1>Trending Posts</h1></div>
+
       <Slider {...settings}>
         {posts.slice(0, 3).map((post: FeaturedPosts) => (
           <div
             key={post._id}
-           
-            className="px-10 py-10 border border-black-900 rounded-lg shadow-lg hover:shadow-2xl flex flex-col gap-5"   
+            className=" flex flex-col gap-5"
           >
-            <div 
-            // className=" bg-green-500"
-            style={ post.image ? { backgroundImage: `url(${imageSources[post._id]})`, backgroundSize: "cover", backgroundPosition: "center", height: "100px" } : { backgroundColor: "red" }}
-
-
+            <div
+              // className=" bg-green-500"
+              style={
+                post.image
+                  ? {
+                      backgroundImage: `url(${imageSources[post._id]})`,
+                      backgroundSize: "cover",
+                      backgroundPosition: "center",
+                      height: "500px",
+                      color: "white",
+                    }
+                  : { backgroundColor: "black", height: "500px", color: "white" }
+              }
+              className=" rounded-t-xl relative border border-black"
             >
-              <h2 className="font-bold text-2xl ">
+              {/* <div className="overlay absolute inset-0 bg-black opacity-25"></div> */}
+
+              <div className=" bg-black opacity-85 absolute bottom-0 py-6 px-8">
+              <div
+              style={ { zIndex: 1000}}
+               className=" z-10 text-white">
+
+              <h2 className="font-bold text-xl ">
                 <Link
-                  className="text-bold text-black-900 hover:text-black-900/50"
+                  className="text-bold text-white hover:text-blue-900"
                   href={`/articles/${post._id}`}
                 >
                   {post.title}
                 </Link>
               </h2>
 
-              <h5 className="mb-5 text-slate-600">
+              <h5 className="mb-5 text-white">
                 {new Intl.DateTimeFormat("en-NG", {
                   dateStyle: "long",
                   timeStyle: "short",
@@ -113,31 +133,35 @@ export default function FeaturedPosts({ posts }: { posts: FeaturedPosts[] }) {
                 }).format(new Date(post.date))}
               </h5>
 
-              <div className="flex gap-5 ">
-                {/* <div className="w-1/2 ">
-                <Image src={imageSources[post._id]} alt="Blogpost image" width={270} height={270} priority={true} />
-              </div> */}
-
-                <div className="w-1/2">
-                  <p>
-                    {post.content.slice(0, 330)}...
-                    <Link
-                      className="text-bold text-black-900 hover:text-black-900/50 text-left"
-                      href={`/articles/${post._id}`}
-                    >
-                      Read More
-                    </Link>
-                  </p>
-                </div>
               </div>
+    
+              <div className="w-full text-lg">
+                <p>
+                  {post.content.slice(0, 330)}.......
+                  <Link
+                    className="text-bold text-white text-left"
+                    href={`/articles/${post._id}`}
+                  >
+                    Read more
+                  </Link>
+                </p>
+              </div>
+
+              </div>
+
+              
+
             </div>
 
-            <div className="flex gap-3 pb-0 mb-0">
+            <div className="flex justify-end gap-3 px-8 py-2 border bg-black border-black border-t-0 rounded-b-xl ">
               <div>
                 <EditBtn id={post._id} />
               </div>
               <div>
                 <DeleteBtn id={post._id} />
+              </div>
+              <div>
+                <CommentBtn id={post._id} />
               </div>
             </div>
           </div>

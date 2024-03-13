@@ -32,15 +32,8 @@ async function getPostById(id: string){
 export default async function FullPost( { params}:  { params: Params }) {
 
     const { id } = params
-    // const router = useRouter();
 
     const { post }: { post: Posts } = await getPostById(id);
-
-    try {
-        
-    } catch (error) {
-        
-    }
 
 
   return (
