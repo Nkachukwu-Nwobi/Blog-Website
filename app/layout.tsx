@@ -1,37 +1,38 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Sen } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Loading from "./Loading";
 import { Suspense } from "react";
+// import Head from "next/head";
 
-const inter = Inter({ subsets: ["latin"] });
+const sen = Sen({ 
+  subsets: ["latin"],
+  weight: ["400", "700"],
+
+});
 
 export const metadata: Metadata = {
-  title: "Nkachukwu's Blog",
+  title: "Code with Karchies",
   description: "Created by Nkachukwu Nwobi",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({children}: Readonly<{children: React.ReactNode;}>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <div className="mx-auto z-100 ">
-          <Navbar />
-          <div className="">
-            <Suspense fallback={ <Loading/>}>
-            {children}
-
-            </Suspense>
-            
-          </div>
-          <Footer />
-
+      {/* <Head>
+        <link rel="icon" href="/blog_icon.png" />
+        <title>Nkachukwu's Blog</title>
+        <meta name="description" content="Created by Nkachukwu Nwobi" />
+      </Head> */}
+      <body className={sen.className}>
+        <div className={`mx-auto z-100 my-0 py-0 ${sen.className}`}>
+          <Suspense fallback={<Loading />}>
+            <Navbar />
+            <div className=" h-full">{children}</div>
+            <Footer />
+          </Suspense>
         </div>
       </body>
     </html>

@@ -22,9 +22,8 @@ export default function Home() {
           throw new Error("Failed to fetch posts");
         }
         const data = await res.json();
-
-        setPosts(data.posts);
-        console.log(data.posts);
+        
+        setPosts(data.postsWithComments);
       } catch (error) {
         console.error("Error fetching posts:", error);
       } finally {
@@ -37,15 +36,18 @@ export default function Home() {
 
   return (
     <>
-    <div className='max-w-6xl mx-auto pt-10'>
-    <Link
+    <main className='max-w-6xl mx-auto pt-10'>
+      <section>
+        <Link
             className="bg-white p-2 text-blue-900 font-bold hover:bg-blue-900 hover:text-white hover:border-black rounded-lg border border-blue-900 "
             href="/addPost"
           >
             Add Post
       </Link>
 
-      
+      </section>
+
+      <section className='mt-10'>
       {loading ? (
         <Loading />
       ) : (
@@ -56,7 +58,11 @@ export default function Home() {
         
       )}
 
-    </div>
+      </section>
+    
+
+
+    </main>
       
     </>
   );

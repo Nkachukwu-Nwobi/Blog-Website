@@ -15,10 +15,9 @@ import { usePathname } from "next/navigation";
 
 export default function Navbar() {
   const pathname = usePathname();
-  console.log(pathname);
 
   return (
-    <nav className=" bg-black sticky top-0 drop-shadow-xl z-10">
+    <nav className=" bg-black sticky top-0 drop-shadow-xl z-50">
       <div className=" max-w-7xl mx-auto flex justify-between items-center px-10 py-2 text-white gap-20 ">
         {/*                               */}
 
@@ -29,9 +28,11 @@ export default function Navbar() {
           </div>
         </div>
 
+        {/* getSearchResults={(results) => setPosts(results)} */}
+
         {/*                               */}
 
-        <div className=" flex justify-between gap-4 text-center text-xl font-black">
+        <div className="flex flex-col sm:flex-row items-center gap-6">
           <Link
             href="/"
             className={`${
@@ -40,6 +41,7 @@ export default function Navbar() {
           >
             Home
           </Link>
+
           <Link
             href={"/blog"}
             className={`${
@@ -48,28 +50,32 @@ export default function Navbar() {
           >
             Blog
           </Link>
+
+          <Link
+            href={"/about"}
+            className={`${
+              pathname === "/about" ? "text-blue-900" : ""
+            } hover:text-blue-900`}
+          >
+            About us
+          </Link>
+
           <Link
             href={"/contact"}
             className={`${
               pathname === "/contact" ? "text-blue-900" : ""
             } hover:text-blue-900`}
           >
-            Contact
+            Contact us
           </Link>
-        </div>
 
-        {/*                               */}
+          <button className=" bg-white px-8 py-2 text-black">Subscribe</button>
 
-        {/* getSearchResults={(results) => setPosts(results)} */}
-
-        {/*                               */}
-
-        <div className="flex flex-col sm:flex-row items-center gap-6">
-          <div>
+          {/* <div>
             <SearchBar />
-          </div>
+          </div> */}
 
-          <div className="flex flex-col sm:flex-row gap-3 text-xl">
+          {/* <div className="flex flex-col sm:flex-row gap-3 text-xl">
             <Link
               href="/about"
               className="text-white no-underline  hover:text-white flex "
@@ -102,7 +108,7 @@ export default function Navbar() {
                 <FaEnvelope />
               </div>
             </Link>
-          </div>
+          </div> */}
         </div>
       </div>
     </nav>

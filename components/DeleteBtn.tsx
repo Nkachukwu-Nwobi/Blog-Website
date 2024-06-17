@@ -22,7 +22,7 @@ export default function DeleteBtn({ id }: { id: string }) {
 
   return (
     <button onClick={deletePost} className="text-red-500">
-      <HiOutlineTrash size={24} />
+      <HiOutlineTrash size={28} />
     </button>
   );
 }

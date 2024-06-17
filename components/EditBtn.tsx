@@ -6,7 +6,7 @@ export default function EditBtn({id}: {id: string}) {
   return (
     <>
         <Link className="text-blue-900" href={`/editPost/${id}`}>
-        <HiPencilAlt size={24}/>
+        <HiPencilAlt size={28}/>
         </Link>
     
     </>

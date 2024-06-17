@@ -1,6 +1,6 @@
 import connectDB from "@/libs/mongodb";
 import Blogpost from "@/models/postModel";
-import Comment from "@/models/commentModel";
+import Comments from "@/models/commentModel";
 import { useParams } from "next/navigation";
 import { NextResponse } from "next/server";
 import { NextRequest } from "next/server";
@@ -23,48 +23,38 @@ export async function PUT(
   return NextResponse.json({ message: "Post updated" }, { status: 200 });
 }
 
+//get single post with comments
+
 export async function GET(
   request: NextRequest,
   { params }: { params: Params }
 ) {
   const { id } = params;
 
-  const post = await Blogpost.findOne({ _id: id });
+  try {
+    await connectDB();
 
-  //   const Comment = await Comment.find() // Assuming your comment model is in a file called 'commentModel.js'
+    // Find the post by ID
+    const post = await Blogpost.findOne({ _id: id });
+    // Use .lean() to get a plain JavaScript object
 
-  // Comment.find({})
-  //   .populate('postId') // Populate the postId field with details of the associated blog post
-  //   .populate('userId') // Populate the userId field with details of the associated user
-  //   .exec((err, comments) => {
-  //     if (err) {
-  //       console.error(err);
-  //       // Handle error
-  //       return;
-  //     }
-  //     // Now, comments array contains each comment with postId and userId fields populated
-  //     console.log(comments);
-  //     // Handle comments
-  //   });
+    if (!post) {
+      return NextResponse.json({ error: "Post not found" }, { status: 404 });
+    }
 
-  return NextResponse.json({ post }, { status: 200 });
-}
+    // Find comments associated with the post ID
+    const comments = await Comments.find({ postId: id }).sort({ createdAt: 1 });
 
-export async function POST(request: NextRequest) {
-  await connectDB();
+    // Attach the comments to the post object
+    const postWithComments = { ...post.toObject(), comments };
 
-  if (request.body === null) {
-    // Return an error response
+    // Return the post with comments
+    return NextResponse.json({ post, postWithComments }, { status: 200 });
+  } catch (error) {
+    console.error(error);
     return NextResponse.json(
-      { error: "Request body is empty" },
-      { status: 400 }
+      { error: "Failed to fetch posts and comments" },
+      { status: 500 }
     );
   }
-
-  // Parse the request body as JSON
-  const content = await request.body;
-
-  await Comment.create({ content });
-
-  return NextResponse.json({ message: "Post created" }, { status: 201 });
 }

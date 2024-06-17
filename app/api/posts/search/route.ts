@@ -8,8 +8,6 @@ export async function GET(request: NextRequest) {
 
   const query = searchParams.get("query");
 
-  console.log(`query: ${query}`);
-
   await connectDB();
 
   if (!query || typeof query !== "string") {

@@ -10,6 +10,7 @@ interface Posts {
     title: string;
     content: string;
     date: string;
+    comments: { content: string; createdAt: string }[];
 }
 
 
@@ -22,8 +23,11 @@ async function getPostById(id: string){
         if (!res.ok) {
             throw new Error("Failed to fetch post");
         }
+        const data = await res.json();
+        
+        return data.postWithComments
+        
 
-        return res.json();
     } catch (error) {
         console.log(error);
     }
@@ -33,7 +37,9 @@ export default async function FullPost( { params}:  { params: Params }) {
 
     const { id } = params
 
-    const { post }: { post: Posts } = await getPostById(id);
+    const post:  Posts = await getPostById(id);
+    console.log("post", post)
+    console.log("post and comments", post)
 
 
   return (

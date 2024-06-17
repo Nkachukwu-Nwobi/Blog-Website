@@ -3,11 +3,19 @@ import { HiChatAlt } from "react-icons/hi";
 
 import Link from 'next/link'
 
-export default function CommentBtn({id}: {id: string}) {
+interface FeaturedPosts {
+  _id: string;
+  title: string;
+  image: string;
+  content: string;
+  date: string;
+}
+
+export default function CommentBtn({post}: {post: FeaturedPosts}) {
   return (
     <>
-        <Link className="text-white" href={`/editPost/${id}`}>
-        <HiChatAlt size={24}/>
+        <Link className="text-white" href={`/articles/${post._id}`}>
+        <HiChatAlt size={28}/>
         </Link>
     
     </>
