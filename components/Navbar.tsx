@@ -18,12 +18,11 @@ export default function Navbar() {
 
   return (
     <nav className=" bg-black sticky top-0 drop-shadow-xl z-50">
-      <div className=" max-w-7xl mx-auto flex justify-between items-center px-10 py-2 text-white gap-20 ">
+      <div className=" max-w-7xl mx-auto flex justify-between items-center px-10 py-6 text-white gap-20 ">
         {/*                               */}
 
         <div>
           <div className="flex flex-col gap-1 text-center justify-center">
-            <ProfilePic />
             <Link href="/">CodeWithKarchies</Link>
           </div>
         </div>
@@ -36,8 +35,8 @@ export default function Navbar() {
           <Link
             href="/"
             className={`${
-              pathname === "/" ? "text-blue-900" : ""
-            } hover:text-blue-900`}
+              pathname === "/" ? "text-yellow" : ""
+            } hover:text-yellow/70`}
           >
             Home
           </Link>
@@ -45,8 +44,8 @@ export default function Navbar() {
           <Link
             href={"/blog"}
             className={`${
-              pathname === "/blog" ? "text-blue-900" : ""
-            } hover:text-blue-900`}
+              pathname === "/blog" ? "text-yellow" : ""
+            } hover:text-yellow/70`}
           >
             Blog
           </Link>
@@ -54,8 +53,8 @@ export default function Navbar() {
           <Link
             href={"/about"}
             className={`${
-              pathname === "/about" ? "text-blue-900" : ""
-            } hover:text-blue-900`}
+              pathname === "/about" ? "text-yellow" : ""
+            } hover:text-yellow/70`}
           >
             About us
           </Link>
@@ -63,8 +62,8 @@ export default function Navbar() {
           <Link
             href={"/contact"}
             className={`${
-              pathname === "/contact" ? "text-blue-900" : ""
-            } hover:text-blue-900`}
+              pathname === "/contact" ? "text-yellow" : ""
+            } hover:text-yellow/70`}
           >
             Contact us
           </Link>

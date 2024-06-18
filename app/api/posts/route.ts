@@ -74,7 +74,13 @@ export async function POST(request: NextRequest) {
 export async function GET(request: NextRequest) {
   await connectDB();
 
-  const posts = await Blogpost.find().exec();
+  const { searchParams } = new URL(request.url);
+  const page = parseInt(searchParams.get("page") || "1");
+  const limit = parseInt(searchParams.get("limit") || "5");
+  const skip = (page - 1) * limit;
+
+  const totalPosts = await Blogpost.countDocuments().exec();
+  const posts = await Blogpost.find().skip(skip).limit(limit).exec();
 
   const postsWithComments = await Promise.all(
     posts.map(async (post) => {
@@ -84,7 +90,7 @@ export async function GET(request: NextRequest) {
       return { ...post.toObject(), comments };
     })
   );
-  return NextResponse.json({ postsWithComments }, { status: 200 });
+  return NextResponse.json({ postsWithComments, totalPosts }, { status: 200 });
 }
 
 export async function DELETE(request: NextRequest) {

@@ -4,6 +4,9 @@ import { useEffect, useState, useRef } from "react";
 import { IoMdSend } from "react-icons/io";
 import { MdOutlineEmojiEmotions } from "react-icons/md";
 import Image from "next/image";
+import profilepic from "@/public/profile-pic.jpeg";
+import ReadNext from "./ReadNext";
+import JoinUs from "./JoinUs";
 
 interface Post {
   _id: string;
@@ -26,11 +29,9 @@ export default function Article({ post }: { post: Post }) {
   const [visibleComments, setVisibleComments] = useState<number>(3);
   const [toggle, setToggle] = useState<boolean>(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-  const [loadComments, setLoadComments] = useState<boolean>(false); 
+  const [loadComments, setLoadComments] = useState<boolean>(false);
 
   useEffect(() => {
-    
-
     const fetchComments = async () => {
       setCommentList(
         post.comments.sort(
@@ -90,14 +91,12 @@ export default function Article({ post }: { post: Post }) {
 
   const loadCommentsHandler = async (count: number) => {
     setLoadComments(true);
-    
+
     setTimeout(() => {
       setVisibleComments(count);
       setLoadComments(false);
-    }
-    , 1000);
-
-  }
+    }, 1000);
+  };
 
   function timeSince(dateString: string) {
     const now = Math.floor(new Date().getTime() / 1000); // Get the current date and time
@@ -126,50 +125,55 @@ export default function Article({ post }: { post: Post }) {
 
   return (
     <>
-      <div className="mb-5">
-        <Link
-          className="bg-blue-900 text-white p-2 border border-blue-900 font-bold rounded-lg hover:bg-white hover:text-blue-900 hover:border-blue-900"
-          href={"/"}
-        >
-          Back to home
-        </Link>
-      </div>
+      <article className="my-20 w-10/12 mx-auto">
+        <section className="mt-10 w-4/12 text-left">
+          <div className=" flex w-9/12 justify-between items-center">
+            <Image
+              className=" rounded-[50%]"
+              src={profilepic}
+              width={60}
+              height={60}
+              alt="Author's image"
+            ></Image>
+            <div className=" flex flex-col justify-between">
+              <p className=" text-purple">Nkachukwu Nwobi</p>
+              <h5 className=" text-midgrey text-lg">
+                Published on{" "}
+                {new Intl.DateTimeFormat("en-NG", {
+                  dateStyle: "long",
+                  // timeStyle: "short",
+                  // timeZone: "Africa/Lagos",
+                }).format(new Date(post.date))}
+              </h5>
+            </div>
+          </div>
 
-      <article className="my-20 max-w-5xl mx-auto">
-        <div className="mt-10">
-          <h2 className="text-4xl mb-5 mt-5 text-blue-900">{post.title}</h2>
-          <h5 className="mb-5 text-slate-600 text-lg">
-            Published on{" "}
-            {new Intl.DateTimeFormat("en-NG", {
-              dateStyle: "long",
-              timeStyle: "short",
-              timeZone: "Africa/Lagos",
-            }).format(new Date(post.date))}
-          </h5>
-        </div>
-        {post.image ? (
-          <div className="flex justify-start gap-5 border-b-2 border-t-2 border-blue-900 py-10">
-            <div className=" w-1/2">
+          <div className=" flex flex-col my-5">
+            <h2 className=" text-black">{post.title}</h2>
+            <h4 className="text-midgrey">Technology</h4>
+          </div>
+        </section>
+
+        <section className="flex flex-col gap-5 border-b-2 border-t-2 border-darkgrey py-10">
+          {post.image && (
+            <div className=" w-full">
               <Image
+                className=" w-full h-[30rem] object-center"
                 src={post.image}
                 alt="Blogpost Image"
-                width={550}
+                width={500}
                 height={500}
                 priority={true}
               />
             </div>
+          )}
 
-            <div className="w-1/2">
-              <p>{post.content}</p>
-            </div>
-          </div>
-        ) : (
-          <div className="w-full border-b-2 border-t-2 border-blue-900 py-10">
+          <div className="w-9/12 mx-auto">
             <p>{post.content}</p>
           </div>
-        )}
+        </section>
 
-        <div className=" mt-10 w-6/12">
+        <section className=" mt-10 w-6/12">
           <h5 className=" ">Comments</h5>
           {commentList.length > 0 ? (
             commentList
@@ -202,7 +206,9 @@ export default function Article({ post }: { post: Post }) {
             <div className="flex justify-start items-center">
               <button
                 onClick={() => loadCommentsHandler(visibleComments + 5)}
-                className={`mt-2 p-2  font-normal rounded-lg text-blue-900 hover:text-blue-400 text-sm ${loadComments ? " animate-pulse" : ""}`}
+                className={`mt-2 p-2  font-normal rounded-lg text-blue-900 hover:text-blue-400 text-sm ${
+                  loadComments ? " animate-pulse" : ""
+                }`}
               >
                 {loadComments ? "Loading..." : "See more"}
               </button>
@@ -256,7 +262,18 @@ export default function Article({ post }: { post: Post }) {
               Add comment
             </Link> */}
           </div>
-        </div>
+        </section>
+
+        <section className=" mt-20 border-b-2 border-midgrey py-8">
+          <div>
+            <h2>What to read next</h2>
+          </div>
+          <div>
+            <ReadNext />
+          </div>
+        </section>
+
+        <JoinUs />
       </article>
     </>
   );
