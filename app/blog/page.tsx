@@ -6,6 +6,7 @@ import Loading from "../Loading";
 import Link from "next/link";
 import PrimaryBtn from "@/components/PrimaryBtn";
 import JoinUs from "@/components/JoinUs";
+import Image from "next/image";
 
 interface Posts {
   _id: string;
@@ -79,16 +80,8 @@ export default function Home() {
         <Loading />
       ) : (
         <main className=" mx-auto pt-10">
-          <section>
-            <Link
-              className="bg-white p-2 text-blue-900 font-bold hover:bg-blue-900 hover:text-white hover:border-black rounded-lg border border-blue-900 "
-              href="/addPost"
-            >
-              Add Post
-            </Link>
-          </section>
 
-          <section className=" bg-lavender mt-20 py-16">
+          <section className=" bg-lavender mt-6 py-16">
             <div className=" w-10/12 mx-auto flex justify-between items-center">
               {posts.length > 0 && (
                 <>
@@ -116,10 +109,13 @@ export default function Home() {
                   </div>
 
                   <div className=" w-[40%]">
-                    <img
-                      className=" w-full h-[22rem]"
+                    <Image
                       src={posts[0].image}
                       alt="Blogpost image"
+                      width={300}
+                      height={300}
+                      objectFit="cover"
+                      className="w-full h-[22rem]"
                     />
                   </div>
                 </>

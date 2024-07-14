@@ -13,6 +13,8 @@ function page() {
     <>
       <main className="  mx-auto">
         {/* Introduction - Owner's profile*/}
+        <section></section>
+
         <section className=" bg-lavender relative ">
           <div className=" flex w-8/12 mx-auto py-28 justify-between items-center">
             <div className=" w-[25%]">
@@ -34,7 +36,7 @@ function page() {
                 blandit massa enim nec. Scelerisque viverra mauris in aliquam
                 sem. At risus viverra adipiscing at in tellus.
               </p>
-              <div className="flex gap-3 text-xl text-black">
+              <div className="flex items-center gap-3 text-xl text-black">
                 <Link
                   href="/about"
                   className=" no-underline  hover:text-white flex "
@@ -60,6 +62,12 @@ function page() {
                   className=" no-underline  hover:text-white flex "
                 >
                   <FaLinkedin />
+                </Link>
+                <Link
+                  className="bg-white p-2 text-darkgrey font-bold hover:bg-purple hover:text-white hover:border-black rounded-lg border border-purple "
+                  href="/addPost"
+                >
+                  Add Post
                 </Link>
               </div>
             </div>

@@ -105,11 +105,14 @@ function Page() {
                 <>
                   <h2 className=" text-black">Featured Post</h2>
                   <div className=" flex flex-col gap-6 text-black">
-                    <img
-                      className=" h-[15rem] w-[20rem]"
+                    <Image
                       src={posts[1].image}
-                      alt="Blogpost image"
-                    />
+                      alt="Featured post image"
+                      width={300}
+                      height={300}
+                      objectFit="cover"
+                    ></Image>
+
                     <p>
                       By <span className=" text-purple">Nkachukwu Nwobi</span> |{" "}
                       {new Intl.DateTimeFormat("en-NG", {

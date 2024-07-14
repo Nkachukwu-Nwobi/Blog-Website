@@ -49,12 +49,13 @@ export default function Posts({ posts }: { posts: Posts[] }) {
               <div className="flex flex-col gap-5 ">
                 <div className=" w-9/12 mx-auto bg-orange-300">
                   {post.image && (
-                    <img
+                    <Image
                       src={post.image}
-                      alt="Blogpost image"
-                      loading="lazy"
-                      // priority={true}
-                      className=""
+                      alt={post.title}
+                      width={300}
+                      height={300}
+                      objectFit="cover"
+                      className="w-full h-[15rem]"
                     />
                   )}
                 </div>
