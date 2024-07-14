@@ -7,18 +7,19 @@ import Loading from "./Loading";
 import { Suspense } from "react";
 // import Head from "next/head";
 
-const sen = Sen({ 
+const sen = Sen({
   subsets: ["latin"],
-  weight: ["400","500", "600", "700", "800"],
-
+  weight: ["400", "500", "600", "700", "800"],
 });
 
 export const metadata: Metadata = {
-  title: "Code with Karchies",
+  title: "Code Factory",
   description: "Created by Nkachukwu Nwobi",
 };
 
-export default function RootLayout({children}: Readonly<{children: React.ReactNode;}>) {
+export default function RootLayout({
+  children,
+}: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
       {/* <Head>

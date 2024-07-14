@@ -23,7 +23,7 @@ export default function Navbar() {
 
         <div>
           <div className="flex flex-col gap-1 text-center justify-center">
-            <Link href="/">CodeWithKarchies</Link>
+            <Link href="/">CodeFactory</Link>
           </div>
         </div>
 
@@ -51,18 +51,18 @@ export default function Navbar() {
           </Link>
 
           <Link
-            href={"/about"}
+            href={"/aboutUs"}
             className={`${
-              pathname === "/about" ? "text-yellow" : ""
+              pathname === "/aboutUs" ? "text-yellow" : ""
             } hover:text-yellow/70`}
           >
             About us
           </Link>
 
           <Link
-            href={"/contact"}
+            href={"/contactUs"}
             className={`${
-              pathname === "/contact" ? "text-yellow" : ""
+              pathname === "/contactUs" ? "text-yellow" : ""
             } hover:text-yellow/70`}
           >
             Contact us

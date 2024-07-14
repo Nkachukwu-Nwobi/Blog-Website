@@ -30,7 +30,8 @@ export default function Home() {
 
       try {
         const res = await fetch(
-          `${base_url}/api/posts?page=${page}&limit=${postsPerPage}`
+          `${base_url}/api/posts?page=${page}&limit=${postsPerPage}`,
+          { cache: "force-cache", next: { revalidate: 3600 } }
         );
         if (!res.ok) {
           throw new Error("Failed to fetch posts");
@@ -88,7 +89,7 @@ export default function Home() {
           </section>
 
           <section className=" bg-lavender mt-20 py-16">
-            <div  className=" w-10/12 mx-auto flex justify-between items-center">
+            <div className=" w-10/12 mx-auto flex justify-between items-center">
               {posts.length > 0 && (
                 <>
                   <div className="w-[50%]">
@@ -106,12 +107,15 @@ export default function Home() {
                       </p>
                       <p>{posts[0].content.slice(0, 300)}</p>
                       <div className=" w-4/12">
-                        <PrimaryBtn text="Read more >" />
+                        <PrimaryBtn
+                          text="Read more >"
+                          link={`/article/${posts[0]._id}`}
+                        />
                       </div>
                     </div>
                   </div>
 
-                  <div  className=" w-[40%]">
+                  <div className=" w-[40%]">
                     <img
                       className=" w-full h-[22rem]"
                       src={posts[0].image}
@@ -120,7 +124,6 @@ export default function Home() {
                   </div>
                 </>
               )}
-
             </div>
           </section>
           <div ref={allPostsRef}></div>
@@ -168,8 +171,6 @@ export default function Home() {
           </section>
 
           <JoinUs />
-
-          
         </main>
       )}
     </>

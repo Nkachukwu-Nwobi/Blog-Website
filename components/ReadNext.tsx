@@ -5,6 +5,8 @@ import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import Loading from "@/app/Loading";
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
 
 interface Posts {
   _id: string;
@@ -47,17 +49,13 @@ function ReadNext() {
 
   return (
     <>
-      <section className=" flex justify-between items-start mt-6">
-        {loading && (
-          <div className=" w-full h-[10rem]">
-            <Loading />
-          </div>
-        )}
+      <section className=" flex justify-between items-start my-6">
+        {loading && <div className=" w-full my-4 loader"></div>}
         {posts.map((post) => (
           <Link
             href={`/article/${post._id}`}
             key={post._id}
-            className="flex flex-col gap-1 w-[28%]"
+            className="flex flex-col gap-1 w-[30%] hover:bg-lightyellow p-6 rounded-lg shadow-md cursor-pointer"
           >
             <div className="relative w-full bg-gray-200">
               <Image

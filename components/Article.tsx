@@ -7,6 +7,7 @@ import Image from "next/image";
 import profilepic from "@/public/profile-pic.jpeg";
 import ReadNext from "./ReadNext";
 import JoinUs from "./JoinUs";
+import CommentsList from "./CommentsList";
 
 interface Post {
   _id: string;
@@ -23,113 +24,22 @@ interface Comment {
 }
 
 export default function Article({ post }: { post: Post }) {
-  const [imageSource, setImageSource] = useState<string | undefined>(undefined);
-  const [comment, setComment] = useState<string>("");
-  const [commentList, setCommentList] = useState<Comment[]>([]);
-  const [visibleComments, setVisibleComments] = useState<number>(3);
-  const [toggle, setToggle] = useState<boolean>(false);
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
-  const [loadComments, setLoadComments] = useState<boolean>(false);
+  // const [imageSource, setImageSource] = useState<string | undefined>(undefined);
+  // const [comment, setComment] = useState<string>("");
 
-  useEffect(() => {
-    const fetchComments = async () => {
-      setCommentList(
-        post.comments.sort(
-          (a, b) =>
-            new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
-        )
-      );
-    };
-    fetchComments();
-  }, [post]);
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        textareaRef.current &&
-        !textareaRef.current.contains(event.target as Node)
-      ) {
-        setToggle(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [textareaRef]);
-
-  const postComment = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const comment = e.currentTarget.comment.value;
-
-    const res = await fetch(`/api/posts/${post._id}/comments`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ content: comment }),
-    });
-
-    if (res.ok) {
-      const data = await res.json();
-      const newComment: Comment = data.newComment;
-
-      setCommentList((prevComments) => {
-        const updatedComments = [...prevComments, newComment];
-        return updatedComments.sort(
-          (a, b) =>
-            new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
-        );
-      });
-
-      setComment("");
-    } else {
-      alert("Failed to add comment");
-    }
-  };
-
-  const loadCommentsHandler = async (count: number) => {
-    setLoadComments(true);
-
-    setTimeout(() => {
-      setVisibleComments(count);
-      setLoadComments(false);
-    }, 1000);
-  };
-
-  function timeSince(dateString: string) {
-    const now = Math.floor(new Date().getTime() / 1000); // Get the current date and time
-    const then = Math.floor(new Date(dateString).getTime() / 1000); // Convert the comment date string to a Date object
-
-    const seconds = Math.floor(now - then);
-    const minutes = Math.floor(seconds / 60);
-    const hours = Math.floor(minutes / 60);
-    const days = Math.floor(hours / 24);
-
-    // Handle edge cases for very recent comments (less than a second)
-    if (seconds < 5) {
-      return "Just now";
-    }
-
-    if (seconds < 60) {
-      return `${seconds}s ago`;
-    } else if (minutes < 60) {
-      return `${minutes}m ago`;
-    } else if (hours < 24) {
-      return `${hours}h ago`;
-    } else {
-      return `${days}d ago`;
-    }
-  }
+  // const [visibleComments, setVisibleComments] = useState<number>(3);
+  // const [toggle, setToggle] = useState<boolean>(false);
+  // const textareaRef = useRef<HTMLTextAreaElement>(null);
+  // const [loadComments, setLoadComments] = useState<boolean>(false);
 
   return (
     <>
       <article className="my-20 w-10/12 mx-auto">
         <section className="mt-10 w-4/12 text-left">
+          {/* Author's Bio */}
           <div className=" flex w-9/12 justify-between items-center">
             <Image
-              className=" rounded-[50%]"
+              className=" rounded-[50%] w-auto h-auto"
               src={profilepic}
               width={60}
               height={60}
@@ -154,15 +64,17 @@ export default function Article({ post }: { post: Post }) {
           </div>
         </section>
 
-        <section className="flex flex-col gap-5 border-b-2 border-t-2 border-darkgrey py-10">
+        {/* Blogpost article */}
+
+        <section className="flex flex-col gap-8 border-b-2 border-t-2 border-darkgrey py-10">
           {post.image && (
-            <div className=" w-full">
+            <div className=" w-full mx-auto">
               <Image
-                className=" w-full h-[30rem] object-center"
+                className=" w-8/12 mx-auto h-[30rem] object-center"
                 src={post.image}
                 alt="Blogpost Image"
-                width={500}
-                height={500}
+                width={400}
+                height={400}
                 priority={true}
               />
             </div>
@@ -173,100 +85,14 @@ export default function Article({ post }: { post: Post }) {
           </div>
         </section>
 
-        <section className=" mt-10 w-6/12">
-          <h5 className=" ">Comments</h5>
-          {commentList.length > 0 ? (
-            commentList
-              .slice(0, visibleComments)
-              .map((comment: Comment, index) => (
-                <div key={index} className="mt-6 flex gap-6">
-                  <div className="px-4 rounded-[50%] bg-blue-900 text-white h-12 text-lg flex items-center justify-center">
-                    U
-                  </div>
-                  <div className=" w-[30%]">
-                    <div className=" flex flex-col gap-1 bg-zinc-200 text-blue-900 rounded-lg px-4 py-2">
-                      <h5 className=" text-left text-sm text-black font-medium">
-                        User
-                      </h5>
-                      <p className="">{comment.content}</p>
-                    </div>
-                    <p className="text-right mt-1 text-xs text-slate-400">
-                      {timeSince(comment.createdAt)}
-                    </p>
-                  </div>
-                </div>
-              ))
-          ) : (
-            <div>
-              <p>No comments yet</p>
-            </div>
-          )}
-
-          {visibleComments < commentList.length ? (
-            <div className="flex justify-start items-center">
-              <button
-                onClick={() => loadCommentsHandler(visibleComments + 5)}
-                className={`mt-2 p-2  font-normal rounded-lg text-blue-900 hover:text-blue-400 text-sm ${
-                  loadComments ? " animate-pulse" : ""
-                }`}
-              >
-                {loadComments ? "Loading..." : "See more"}
-              </button>
-            </div>
-          ) : (
-            <div className="flex justify-start items-center">
-              <button
-                onClick={() => loadCommentsHandler(visibleComments - 5)}
-                className="mt-2 p-2  font-normal rounded-lg text-blue-900 hover:text-blue-400 text-sm "
-              >
-                Less
-              </button>
-            </div>
-          )}
-
-          <div>
-            <form
-              onSubmit={postComment}
-              className=" flex flex-col mt-4 gap-2 relative"
-            >
-              {/* <label htmlFor="comment">Comment:</label> */}
-              <textarea
-                ref={textareaRef}
-                onClick={() => setToggle(!toggle)}
-                name="comment"
-                value={comment}
-                onChange={(e) => setComment(e.target.value)}
-                id="comment"
-                cols={30}
-                rows={toggle ? 6 : 4}
-                className=" px-4 py-2 resize-none focus:outline-none focus:ring-2 focus:ring-blue-900 focus:border-transparent border-transparent bg-zinc-200 text-blue-900 rounded-lg"
-                placeholder="Enter your comment here"
-              ></textarea>
-              <div className=" flex justify-between px-4 py-2 items-center absolute bottom-0 w-full">
-                <div>
-                  <MdOutlineEmojiEmotions className=" text-2xl" />
-                </div>
-                <button
-                  type="submit"
-                  className="bg-blue-900 text-white p-2 border border-blue-900 font-bold rounded-lg hover:bg-white hover:text-blue-900 hover:border-blue-900"
-                >
-                  <IoMdSend className="text-xs" />
-                </button>
-              </div>
-            </form>
-
-            {/* <Link
-              className="bg-blue-900 text-white p-2 border border-blue-900 font-bold rounded-lg hover:bg-white hover:text-blue-900 hover:border-blue-900"
-              href={`/articles/${post._id}/comment`}
-            >
-              Add comment
-            </Link> */}
-          </div>
+        <section className=" mt-10 w-6/12 flex flex-col gap-6 ">
+          <h3 className=" ">Comments</h3>
+          <CommentsList post={post} />
         </section>
 
-        <section className=" mt-20 border-b-2 border-midgrey py-8">
+        <section className=" mt-14 border-b-2 border-midgrey py-8">
           <div>
-            <h2>What to read next</h2>
+            <h3>What to read next</h3>
           </div>
           <div>
             <ReadNext />

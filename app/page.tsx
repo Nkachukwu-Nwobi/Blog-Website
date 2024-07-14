@@ -7,8 +7,7 @@ import { useEffect, useState } from "react";
 import PrimaryBtn from "@/components/PrimaryBtn";
 import Link from "next/link";
 import Image from "next/image";
-import { authorsList } from "@/libs/authorsList";
-import { FaFacebook, FaTwitter, FaGithub, FaLinkedin } from "react-icons/fa";
+import Authors from "@/components/Authors";
 
 interface Posts {
   _id: string;
@@ -46,6 +45,7 @@ function Page() {
 
   return (
     <main>
+      {/* latest post */}
       <section
         className="bg-cover bg-center bg-local bg-no-repeat h-[100vh] w-full relative flex"
         style={{
@@ -64,7 +64,7 @@ function Page() {
           ) : (
             <section className="flex flex-col gap-6">
               <div className="w-full text-6xl">
-                <h1>{posts[0].title}</h1>
+                <h1>{posts[posts.length - 1].title}</h1>
               </div>
               <div className="text-xl text-left text-white ">
                 <p>
@@ -73,23 +73,28 @@ function Page() {
                     dateStyle: "long",
                     // timeStyle: "short",
                     // timeZone: "Africa/Lagos",
-                  }).format(new Date(posts[0].date))}
+                  }).format(new Date(posts[posts.length - 1].date))}
                 </p>
               </div>
 
               <div className=" w-8/12">
-                <p>{posts[0].content.slice(0, 500)}</p>
+                <p>{posts[posts.length - 1].content.slice(0, 500)}</p>
               </div>
 
               <div className=" w-3/12">
-                <PrimaryBtn text="Read more >" />
+                <PrimaryBtn
+                  text="Read more >"
+                  link={`/article/${posts[posts.length - 1]._id}`}
+                />
               </div>
             </section>
           )}
         </div>
       </section>
 
+      {/* Featured post */}
       <section className=" flex justify-between gap-8 w-10/12 mx-auto mt-10">
+        {/* Featured post */}
         <section className=" flex flex-col gap-8 w-[55%]">
           {posts.length > 0 ? (
             <>
@@ -111,7 +116,10 @@ function Page() {
                 <h5>{posts[1].title}</h5>
                 <p>{posts[1].content.slice(0, 200)}</p>
                 <div className=" w-4/12">
-                  <PrimaryBtn text="Read more >" />
+                  <PrimaryBtn
+                    text="Read more >"
+                    link={`/article/${posts[1]._id}`}
+                  />
                 </div>
               </div>
             </>
@@ -119,7 +127,7 @@ function Page() {
             <div>Loading...</div>
           )}
         </section>
-
+        {/* 5 blog posts */}
         <section className=" w-[45%]">
           {loading ? (
             <section>Loading...</section>
@@ -133,9 +141,9 @@ function Page() {
               </div>
 
               <div className=" flex flex-col gap-2">
-                {posts.slice(0, 4).map((post) => (
+                {posts.slice(0, 5).map((post) => (
                   <Link
-                    href={`/articles/${post._id}`}
+                    href={`/article/${post._id}`}
                     key={post._id}
                     className=" flex flex-col text-black hover:bg-lightyellow px-6 py-4 rounded-md"
                   >
@@ -155,6 +163,8 @@ function Page() {
           )}
         </section>
       </section>
+
+      {/* about us */}
 
       <section className=" mt-40 w-10/12 mx-auto ">
         <div className=" flex justify-end ">
@@ -190,6 +200,7 @@ function Page() {
         </div>
       </section>
 
+      {/* Our story */}
       <section className=" mt-20 w-10/12 mx-auto relative">
         <Image src={hero2} alt="banner mage"></Image>
         <div className=" w-[50%] flex flex-col gap-4 absolute right-0 bottom-0 bg-light px-16 py-24 text-darkgrey">
@@ -204,50 +215,14 @@ function Page() {
             aliquip.
           </p>
           <div className=" w-[50%]">
-            <PrimaryBtn text="Discover our story >" />
+            <PrimaryBtn text="Discover our story >" link={`/aboutUs`} />
           </div>
         </div>
       </section>
 
-      <section className=" mt-20 w-10/12 mx-auto flex flex-col gap-10">
-        <div className=" text-center">
-          <h2>List of Authors</h2>
-        </div>
-        <div className=" flex gap-14 mx-auto w-10/12">
-          {authorsList.map((author) => (
-            <div
-              key={author.id}
-              className=" flex flex-col gap-2 mx-auto justify-center items-center bg-lightgrey hover:bg-lightyellow px-8 py-10 w-[35%] text-center"
-            >
-              <div className=" mb-4 h-[100px]">
-                <Image
-                  src={author.image}
-                  alt="author image"
-                  width={100}
-                  height={100}
-                  className=" rounded-[50%] h-[100px]"
-                />
-              </div>
-
-              <h3 className=" text-darkgrey text-2xl">{author.name}</h3>
-              <p className=" text-sm text-midgrey">{author.role} at CWK</p>
-              <div className=" flex gap-4">
-                <a key={author.socials[0].name} href={author.socials[0].link}>
-                  <FaFacebook />
-                </a>
-                <a key={author.socials[1].name} href={author.socials[1].link}>
-                  <FaTwitter />
-                </a>
-                <a key={author.socials[2].name} href={author.socials[2].link}>
-                  <FaLinkedin />
-                </a>
-                <a key={author.socials[3].name} href={author.socials[3].link}>
-                  <FaGithub />
-                </a>
-              </div>
-            </div>
-          ))}
-        </div>
+      {/* Authors */}
+      <section>
+        <Authors />
       </section>
 
       <section className=" mt-20 w-10/12 mx-auto flex justify-between items-center gap-10">
