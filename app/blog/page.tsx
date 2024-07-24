@@ -114,7 +114,7 @@ export default function Home() {
 
                   <div className=" w-[40%]">
                     <Image
-                      src={posts[0].image}
+                      src={featuredPost.image}
                       alt="Blogpost image"
                       width={300}
                       height={300}
