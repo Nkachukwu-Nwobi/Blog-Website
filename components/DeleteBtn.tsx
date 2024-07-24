@@ -8,14 +8,15 @@ export default function DeleteBtn({ id }: { id: string }) {
 
   async function deletePost() {
     const confirmed = confirm("Are you sure you want to delete this post?");
+    const base_url = process.env.NEXT_PUBLIC_BASE_URL as string;
 
     if (confirmed) {
-      const res = await fetch(`http://localhost:3000/api/posts?id=${id}`, {
+      const res = await fetch(`${base_url}/api/posts?id=${id}`, {
         method: "DELETE",
       });
 
-      if(res.ok){
-        router.refresh()
+      if (res.ok) {
+        router.refresh();
       }
     }
   }

@@ -202,18 +202,18 @@ function CommentsList({ post }: { post: Post }) {
             </div>
           )}
 
-          <div className=" relative mt-20">
+          <div className=" relative mt-10">
             {submitting && (
-              <div className="absolute top-0 left-0 w-full h-full bg-darkgrey bg-opacity-50 z-10 flex justify-center items-center">
+              <div className="absolute top-0 left-0 w-full h-full bg-lavender bg-opacity-40 z-10 flex justify-center items-center">
                 <div className=" rounded-xl">
-                  <div className="animate-spin rounded-full h-14 w-14 border-b-2 border-yellow"></div>
+                  <div className="animate-spin rounded-full h-14 w-14 border-b-4 border-purple"></div>
                 </div>
               </div>
             )}
 
             <form
               onSubmit={postComment}
-              className=" flex flex-col mt-4 gap-2 relative"
+              className=" flex flex-col gap-2 relative"
             >
               {/* <label htmlFor="comment">Comment:</label> */}
               <textarea

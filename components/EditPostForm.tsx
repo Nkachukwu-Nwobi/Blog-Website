@@ -19,7 +19,8 @@ export default function EditPostForm({ id, title, content }: Props) {
     e.preventDefault();
 
     try {
-      const res = await fetch(`http://localhost:3000/api/posts/${id}`, {
+      const base_url = process.env.NEXT_PUBLIC_BASE_URL as string;
+      const res = await fetch(`${base_url}/api/posts/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -41,14 +42,14 @@ export default function EditPostForm({ id, title, content }: Props) {
   return (
     <>
       <form onSubmit={handleSubmit}>
-      <div className="mb-5">
-        <Link
-          className="bg-blue-900 text-white p-2 border border-blue-900 font-bold rounded-lg hover:bg-white hover:text-blue-900 hover:border-blue-900"
-          href={"/"}
-        >
-          Back to home
-        </Link>
-      </div>
+        <div className="mb-5">
+          <Link
+            className="bg-blue-900 text-white p-2 border border-blue-900 font-bold rounded-lg hover:bg-white hover:text-blue-900 hover:border-blue-900"
+            href={"/"}
+          >
+            Back to home
+          </Link>
+        </div>
 
         <div className="mt-2 flex flex-col gap-2">
           <label htmlFor="title">Title</label>

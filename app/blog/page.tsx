@@ -74,21 +74,25 @@ export default function Home() {
   const totalPages = Math.ceil(totalPosts / postsPerPage);
   const pages = Array.from({ length: totalPages }, (_, index) => index + 1);
 
+  const randomIndex = Math.floor(Math.random() * posts.length);
+  const featuredPost = posts[randomIndex];
+
   return (
     <>
       {loading ? (
         <Loading />
       ) : (
-        <main className=" mx-auto pt-10">
+        <main className=" mx-auto">
+          {/* Featured post */}
 
-          <section className=" bg-lavender mt-6 py-16">
+          <section className=" bg-lavender mt-0 py-16">
             <div className=" w-10/12 mx-auto flex justify-between items-center">
               {posts.length > 0 && (
                 <>
                   <div className="w-[50%]">
                     <p>Featured Post</p>
                     <div className=" flex flex-col gap-2 text-black">
-                      <h2 className=" text-black">{posts[0].title}</h2>
+                      <h2 className=" text-black">{featuredPost.title}</h2>
                       <p>
                         By <span className=" text-purple">Nkachukwu Nwobi</span>{" "}
                         |{" "}
@@ -96,13 +100,13 @@ export default function Home() {
                           dateStyle: "long",
                           // timeStyle: "short",
                           // timeZone: "Africa/Lagos",
-                        }).format(new Date(posts[0].date))}
+                        }).format(new Date(featuredPost.date))}
                       </p>
-                      <p>{posts[0].content.slice(0, 300)}</p>
+                      <p>{featuredPost.content.slice(0, 300)}</p>
                       <div className=" w-4/12">
                         <PrimaryBtn
                           text="Read more >"
-                          link={`/article/${posts[0]._id}`}
+                          link={`/article/${featuredPost._id}`}
                         />
                       </div>
                     </div>
@@ -124,7 +128,8 @@ export default function Home() {
           </section>
           <div ref={allPostsRef}></div>
 
-          <div className=" mt-20">
+          {/* All posts */}
+          <div className=" mt-10">
             <AllPosts posts={posts} />
           </div>
 

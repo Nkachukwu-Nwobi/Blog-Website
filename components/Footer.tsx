@@ -77,7 +77,7 @@ function Footer() {
             placeholder="Enter your Email"
             className=" px-4 py-2 text-light bg-darkgrey bg-opacity-[20%] border border-midgrey w-[65%]"
           />
-          <PrimaryBtn text="Subscribe" link={`/subscribe`} />
+          <PrimaryBtn text="Subscribe" link={`/contactUs`} />
         </div>
       </div>
 
